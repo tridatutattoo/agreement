@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tridatu Tattoo — Consent & Agreement Form</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Work+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1c1917;
+    --ink-soft:#3a352f;
+    --paper:#f2ead8;
+    --paper-deep:#e8dcc4;
+    --paper-card:#faf6ec;
+    --oxblood:#7a2530;
+    --oxblood-dark:#5c1c24;
+    --stone:#a79879;
+    --stone-line:#d8cba9;
+    --ok:#4a6b4d;
+    --err:#a13c2e;
+    --radius:2px;
+    --max-w:700px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Work Sans',sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .rail-progress{
+    position:fixed;
+    top:0; left:0;
+    height:3px; width:0%;
+    background:var(--oxblood);
+    z-index:100;
+    transition:width .25s ease;
+  }
+  header.masthead{
+    max-width:var(--max-w);
+    margin:0 auto;
+    padding:64px 24px 32px;
+    text-align:center;
+  }
+  header.masthead .brand{
+    font-family:'Space Mono',monospace;
+    letter-spacing:.28em;
+    text-transform:uppercase;
+    font-size:12px;
+    color:var(--stone);
+    margin-bottom:18px;
+  }
+  header.masthead h1{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    font-size:clamp(28px,5vw,40px);
+    margin:0 0 14px;
+    letter-spacing:-.01em;
+  }
+  header.masthead .quote{
+    font-family:'Fraunces',serif;
+    font-style:italic;
+    font-weight:400;
+    font-size:17px;
+    color:var(--ink-soft);
+    max-width:480px;
+    margin:0 auto 22px;
+  }
+  header.masthead .locale{
+    font-size:13px;
+    color:var(--stone);
+    font-family:'Space Mono',monospace;
+  }
+  .ink-divider{
+    width:44px; height:2px;
+    background:var(--oxblood);
+    margin:26px auto 0;
+    border-radius:2px;
+  }
+
+  main{
+    max-width:var(--max-w);
+    margin:0 auto;
+    padding:8px 24px 120px;
+  }
+
+  .section{
+    background:var(--paper-card);
+    border:1px solid var(--stone-line);
+    border-radius:var(--radius);
+    padding:32px 28px;
+    margin-bottom:22px;
+    position:relative;
+    scroll-margin-top:24px;
+  }
+  .section-num{
+    font-family:'Space Mono',monospace;
+    font-size:12px;
+    color:var(--oxblood);
+    letter-spacing:.14em;
+    display:block;
+    margin-bottom:8px;
+  }
+  .section h2{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    font-size:22px;
+    margin:0 0 6px;
+  }
+  .section .section-sub{
+    color:var(--ink-soft);
+    font-size:14px;
+    margin:0 0 22px;
+  }
+
+  label{
+    display:block;
+    font-size:13px;
+    font-weight:600;
+    margin-bottom:6px;
+    color:var(--ink-soft);
+  }
+  .field{margin-bottom:18px;}
+  input[type=text],
+  input[type=date],
+  input[type=tel],
+  input[type=email],
+  select,
+  textarea{
+    width:100%;
+    padding:11px 12px;
+    border:1px solid var(--stone-line);
+    border-radius:var(--radius);
+    background:#fff;
+    font-family:'Work Sans',sans-serif;
+    font-size:15px;
+    color:var(--ink);
+  }
+  input:focus, select:focus, textarea:focus{
+    outline:2px solid var(--oxblood);
+    outline-offset:1px;
+  }
+  textarea{resize:vertical; min-height:70px;}
+
+  .radio-row{display:flex; gap:10px; flex-wrap:wrap;}
+  .radio-pill{
+    position:relative;
+  }
+  .radio-pill input{position:absolute; opacity:0; width:1px; height:1px;}
+  .radio-pill span{
+    display:inline-block;
+    padding:9px 18px;
+    border:1px solid var(--stone-line);
+    border-radius:20px;
+    font-size:14px;
+    cursor:pointer;
+    background:#fff;
+    transition:all .15s ease;
+  }
+  .radio-pill input:checked + span{
+    background:var(--oxblood);
+    border-color:var(--oxblood);
+    color:#fff;
+  }
+  .radio-pill input:focus-visible + span{
+    outline:2px solid var(--oxblood);
+    outline-offset:2px;
+  }
+
+  .qrow{
+    padding:16px 0;
+    border-top:1px solid var(--stone-line);
+  }
+  .qrow:first-of-type{border-top:none; padding-top:0;}
+  .qtext{font-size:14.5px; margin-bottom:10px; color:var(--ink); font-weight:500;}
+  .conditional-field{
+    margin-top:12px;
+    padding-left:2px;
+    display:none;
+  }
+  .conditional-field.show{display:block;}
+
+  .checkline{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    font-size:14px;
+    color:var(--ink-soft);
+    cursor:pointer;
+  }
+  .checkline input{margin-top:3px; width:16px; height:16px; accent-color:var(--oxblood); flex-shrink:0;}
+
+  .aftercare-list{padding-left:20px; margin:0; font-size:14.5px;}
+  .aftercare-list li{margin-bottom:12px;}
+  .aftercare-list li strong{color:var(--oxblood-dark);}
+
+  .policy-box{
+    background:var(--paper-deep);
+    border-left:3px solid var(--oxblood);
+    padding:14px 16px;
+    font-size:14px;
+    border-radius:0 var(--radius) var(--radius) 0;
+    margin-bottom:16px;
+  }
+  .policy-box p{margin:0 0 8px;}
+  .policy-box p:last-child{margin-bottom:0;}
+
+  .notice{
+    font-size:13px;
+    color:var(--ink-soft);
+    font-style:italic;
+    margin-top:14px;
+  }
+
+  .minor-block{
+    display:none;
+    margin-top:20px;
+    padding-top:20px;
+    border-top:1px dashed var(--stone-line);
+  }
+  .minor-block.show{display:block;}
+  .minor-flag{
+    display:none;
+    background:#fbeceb;
+    border:1px solid var(--err);
+    color:var(--err);
+    padding:12px 14px;
+    border-radius:var(--radius);
+    font-size:13.5px;
+    margin-top:10px;
+  }
+  .minor-flag.show{display:block;}
+  .age-blocked{
+    display:none;
+    background:#fbeceb;
+    border:1px solid var(--err);
+    color:var(--err);
+    padding:14px 16px;
+    border-radius:var(--radius);
+    font-size:14px;
+    margin-top:10px;
+  }
+  .age-blocked.show{display:block;}
+
+  canvas.sigpad{
+    width:100%;
+    height:160px;
+    border:1px solid var(--stone-line);
+    border-radius:var(--radius);
+    background:#fff;
+    touch-action:none;
+    cursor:crosshair;
+  }
+  .sig-actions{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:8px;
+  }
+  .sig-clear{
+    background:none;
+    border:none;
+    font-family:'Space Mono',monospace;
+    font-size:12px;
+    color:var(--stone);
+    text-decoration:underline;
+    cursor:pointer;
+    padding:4px 0;
+  }
+  .sig-status{font-size:12px; color:var(--stone); font-family:'Space Mono',monospace;}
+
+  .submit-wrap{margin-top:8px;}
+  button.submit-btn{
+    width:100%;
+    padding:16px;
+    background:var(--oxblood);
+    color:#fff;
+    border:none;
+    border-radius:var(--radius);
+    font-family:'Space Mono',monospace;
+    font-size:14px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    cursor:pointer;
+    transition:background .15s ease;
+  }
+  button.submit-btn:hover{background:var(--oxblood-dark);}
+  button.submit-btn:disabled{background:var(--stone); cursor:not-allowed;}
+
+  .form-error{
+    font-size:13px;
+    color:var(--err);
+    margin-top:10px;
+    display:none;
+  }
+  .form-error.show{display:block;}
+
+  #successScreen{
+    display:none;
+    max-width:var(--max-w);
+    margin:80px auto;
+    padding:0 24px;
+    text-align:center;
+  }
+  #successScreen.show{display:block;}
+  #successScreen h2{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    font-size:28px;
+  }
+  #successScreen p{color:var(--ink-soft); font-size:15px;}
+
+  footer{
+    text-align:center;
+    padding:40px 24px 60px;
+    font-family:'Space Mono',monospace;
+    font-size:11px;
+    color:var(--stone);
+    letter-spacing:.08em;
+  }
+
+  @media (max-width:520px){
+    .section{padding:24px 18px;}
+    header.masthead{padding:44px 18px 24px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="rail-progress" id="railProgress"></div>
+
+<header class="masthead">
+  <div class="brand">Tridatu Tattoo</div>
+  <h1>Consent &amp; Agreement Form</h1>
+  <p class="quote">"What is inked is not just skin — it becomes memory. This agreement protects that memory, and you."</p>
+  <div class="locale">Private studio · By appointment only · Kuta, Bali</div>
+  <div class="ink-divider"></div>
+</header>
+
+<main>
+<form id="agreementForm" novalidate>
+
+  <!-- SECTION 1 -->
+  <section class="section" id="s1">
+    <span class="section-num">01 / 11</span>
+    <h2>Client Information</h2>
+    <p class="section-sub">Please fill in your details as they appear on your ID.</p>
+
+    <div class="field">
+      <label for="fullName">Full Name</label>
+      <input type="text" id="fullName" name="fullName" required autocomplete="name">
+    </div>
+    <div class="field">
+      <label for="dob">Date of Birth</label>
+      <input type="date" id="dob" name="dob" required>
+      <div class="age-blocked" id="ageBlocked">Thank you for your interest — Tridatu Tattoo is unable to accept clients under the age of 16, even with parental consent.</div>
+    </div>
+    <div class="field">
+      <label for="idNumber">ID Number (KTP / Passport)</label>
+      <input type="text" id="idNumber" name="idNumber" required>
+    </div>
+    <div class="field">
+      <label for="phone">Phone / WhatsApp</label>
+      <input type="tel" id="phone" name="phone" required autocomplete="tel">
+    </div>
+    <div class="field">
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required autocomplete="email">
+    </div>
+    <div class="field">
+      <label for="country">Country of Origin</label>
+      <input type="text" id="country" name="country" required>
+    </div>
+    <div class="field">
+      <label for="instagram">Instagram</label>
+      <input type="text" id="instagram" name="instagram" placeholder="@yourhandle">
+    </div>
+  </section>
+
+  <!-- SECTION 2 — MINOR CONSENT (conditional) -->
+  <section class="section" id="s2" style="display:none;">
+    <span class="section-num">02 / 11</span>
+    <h2>Minor Consent</h2>
+    <p class="section-sub">Required because the date of birth entered indicates the client is under 18.</p>
+
+    <div class="minor-block show" id="minorBlock">
+      <div class="field">
+        <label for="guardianName">Parent / Guardian Full Name</label>
+        <input type="text" id="guardianName" name="guardianName">
+      </div>
+      <div class="field">
+        <label for="guardianId">Parent / Guardian ID Number</label>
+        <input type="text" id="guardianId" name="guardianId">
+      </div>
+      <div class="field">
+        <label for="relationship">Relationship to Client</label>
+        <input type="text" id="relationship" name="relationship" placeholder="e.g. Mother, Father, Legal Guardian">
+      </div>
+      <label class="checkline">
+        <input type="checkbox" id="guardianDeclare" name="guardianDeclare">
+        <span>I am the legal parent/guardian of the client named above and I consent to this tattoo procedure on their behalf.</span>
+      </label>
+    </div>
+  </section>
+
+  <!-- SECTION 3 -->
+  <section class="section" id="s3">
+    <span class="section-num">03 / 11</span>
+    <h2>Session Date</h2>
+    <div class="field">
+      <label for="sessionDate">Session Date</label>
+      <input type="date" id="sessionDate" name="sessionDate">
+    </div>
+    <label class="checkline">
+      <input type="checkbox" id="tbd" name="tbd">
+      <span>To be discussed with the artist</span>
+    </label>
+  </section>
+
+  <!-- SECTION 4 — HEALTH DECLARATION -->
+  <section class="section" id="s4">
+    <span class="section-num">04 / 11</span>
+    <h2>Health Declaration</h2>
+    <p class="section-sub">Please answer honestly — this information helps ensure your safety.</p>
+
+    <div class="qrow">
+      <div class="qtext">Are you pregnant or breastfeeding?</div>
+      <div class="radio-row">
+        <label class="radio-pill"><input type="radio" name="q_pregnant" value="Yes" required><span>Yes</span></label>
+        <label class="radio-pill"><input type="radio" name="q_pregnant" value="No"><span>No</span></label>
+      </div>
+    </div>
+
+    <div class="qrow">
+      <div class="qtext">Do you have any known allergies (latex, ink, topical anesthetics, etc.)?</div>
+      <div class="radio-row">
+        <label class="radio-pill"><input type="radio" name="q_allergy" value="Yes" required data-reveal="allergyDetail"><span>Yes</span></label>
+        <label class="radio-pill"><input type="radio" name="q_allergy" value="No" data-reveal="allergyDetail"><span>No</span></label>
+      </div>
+      <div class="conditional-field" id="allergyDetail">
+        <input type="text" id="allergyDetailText" name="allergyDetailText" placeholder="Please specify">
+      </div>
+    </div>
+
+    <div class="qrow">
+      <div class="qtext">Do you have any skin conditions (eczema, psoriasis, keloid-prone skin)?</div>
+      <div class="radio-row">
+        <label class="radio-pill"><input type="radio" name="q_skin" value="Yes" required><span>Yes</span></label>
+        <label class="radio-pill"><input type="radio" name="q_skin" value="No"><span>No</span></label>
+      </div>
+    </div>
+
+    <div class="qrow">
+      <div class="qtext">Do you have any relevant medical conditions (diabetes, hemophilia, heart conditions, epilepsy)?</div>
+      <div class="radio-row">
+        <label class="radio-pill"><input type="radio" name="q_medical" value="Yes" required><span>Yes</span></label>
+        <label class="radio-pill"><input type="radio" name="q_medical" value="No"><span>No</span></label>
+      </div>
+    </div>
+
+    <div class="qrow">
+      <div class="qtext">Are you currently on medication (e.g. blood thinners)?</div>
+      <div class="radio-row">
+        <label class="radio-pill"><input type="radio" name="q_medication" value="Yes" required><span>Yes</span></label>
+        <label class="radio-pill"><input type="radio" name="q_medication" value="No"><span>No</span></label>
+      </div>
+    </div>
+
+    <div class="qrow">
+      <div class="qtext">Are you under the influence of alcohol or drugs today?</div>
+      <div class="radio-row">
+        <label class="radio-pill"><input type="radio" name="q_influence" value="Yes" required data-reveal="influenceFlag"><span>Yes</span></label>
+        <label class="radio-pill"><input type="radio" name="q_influence" value="No" data-reveal="influenceFlag"><span>No</span></label>
+      </div>
+      <div class="minor-flag" id="influenceFlag">The studio reserves the right to refuse or reschedule the session if you are under the influence of alcohol or drugs.</div>
+    </div>
+
+    <div class="qrow">
+      <div class="qtext">Have you fainted during a medical or tattoo procedure before?</div>
+      <div class="radio-row">
+        <label class="radio-pill"><input type="radio" name="q_fainted" value="Yes" required><span>Yes</span></label>
+        <label class="radio-pill"><input type="radio" name="q_fainted" value="No"><span>No</span></label>
+      </div>
+    </div>
+
+    <p class="notice">Tridatu Tattoo reserves the right to refuse or reschedule the session based on the health information provided, including requesting a doctor's clearance letter for certain medical conditions before proceeding.</p>
+  </section>
+
+  <!-- SECTION 5 -->
+  <section class="section" id="s5">
+    <span class="section-num">05 / 11</span>
+    <h2>Informed Consent Statement</h2>
+    <p class="section-sub">By checking below, I acknowledge and agree that:</p>
+    <ul class="aftercare-list">
+      <li>A tattoo is a permanent modification of the skin.</li>
+      <li>Possible risks include infection, allergic reaction, skin discoloration, and scarring.</li>
+      <li>The final result may vary from the reference design due to individual skin characteristics.</li>
+      <li>I grant the artist limited creative freedom within the agreed design brief.</li>
+    </ul>
+    <label class="checkline">
+      <input type="checkbox" id="consentAgree" name="consentAgree" required>
+      <span>I have read and agree to the informed consent statement above.</span>
+    </label>
+  </section>
+
+  <!-- SECTION 6 — AFTERCARE -->
+  <section class="section" id="s6">
+    <span class="section-num">06 / 11</span>
+    <h2>Aftercare Agreement</h2>
+    <p class="section-sub">I confirm that I have received and understood the following aftercare instructions, and that I am fully responsible for the care of my tattoo after leaving the studio. Tridatu Tattoo is not liable for complications resulting from improper aftercare.</p>
+    <ol class="aftercare-list">
+      <li>Use the second skin (repairing film derm) for at least 12 hours up to 3 days, peel it off and gently wash the tattoo area with lukewarm water, then just tap it with a paper towel or tissue to dry it. If you notice excessive fluid buildup, blistering, rash, or irritation under the second skin before the recommended time, remove it early and clean the area gently.</li>
+      <li>Apply a <strong>THIN</strong> layer of the ointment (tattoo aftercare cream) recommended by the tattoo artist, 1–3 times a day, just to keep it a bit moist.</li>
+      <li>Keep the tattoo clean and dry, avoid soaking the tattoo in water — showers are okay, baths are not. (Of course, no swimming wherever.)</li>
+      <li>Avoid direct sunlight on the tattoo while it's healing.</li>
+      <li>Wear loose, clean clothing over the tattooed area to avoid friction and allow air circulation. Avoid gym, sauna, hot yoga, or any activity causing excessive sweating and friction for at least 1–2 weeks.</li>
+      <li>Be patient with the healing progress — it takes time, and everyone is different. Quickest healing is around 1 week, some take several weeks, and 1 month is still normal for a tattoo to fully heal.</li>
+      <li><strong>Do not rub or pick!</strong> As the tattoo heals, it may scab or flake slightly, and will be itchy — DO NOT SCRATCH IT! If you really need to touch your tattoo, please clean your hands first.</li>
+      <li>Watch for signs of infection: excessive redness spreading beyond the tattoo, swelling, pus/discharge, fever, or increasing pain after the first few days. If you notice these signs, seek medical attention immediately and inform your artist.</li>
+      <li>A touch-up may be required. After your tattoo is completely healed, if you think parts have dropped out, please contact your artist directly. Since everyone is different, some people may peel less, some peel more.</li>
+      <li>For any concerns during healing or questions about touch-ups, contact Tridatu Tattoo directly via Instagram — please don't seek treatment advice from unrelated sources.</li>
+    </ol>
+    <label class="checkline">
+      <input type="checkbox" id="aftercareAgree" name="aftercareAgree" required>
+      <span>I have read and understood the aftercare instructions above.</span>
+    </label>
+  </section>
+
+  <!-- SECTION 7 -->
+  <section class="section" id="s7">
+    <span class="section-num">07 / 11</span>
+    <h2>Touch-up Policy</h2>
+    <div class="policy-box">
+      <p>Tridatu Tattoo offers <strong>always-free touch-ups.</strong></p>
+      <p>Everyone's healing process is different — some skin peels more, some less, and results can vary from person to person even with the same aftercare routine. If your tattoo needs a touch-up after it has fully healed, the studio will always be ready to perfect the artwork on your body.</p>
+    </div>
+  </section>
+
+  <!-- SECTION 8 -->
+  <section class="section" id="s8">
+    <span class="section-num">08 / 11</span>
+    <h2>Booking &amp; Payment Policy</h2>
+    <div class="policy-box">
+      <p>A deposit is required to confirm your booking. (Amount confirmed directly with your artist.)</p>
+      <p>Rescheduling or cancellation must be made at least <strong>48 hours</strong> in advance.</p>
+      <p><strong>No-show:</strong> the deposit is forfeited.</p>
+      <p><strong>Payment method: cash only.</strong> Deposit may be paid via bank transfer; final payment must be made in cash.</p>
+    </div>
+    <label class="checkline">
+      <input type="checkbox" id="policyAgree" name="policyAgree" required>
+      <span>I have read and agree to the booking and payment policy above.</span>
+    </label>
+  </section>
+
+  <!-- SECTION 9 -->
+  <section class="section" id="s9">
+    <span class="section-num">09 / 11</span>
+    <h2>Portfolio &amp; Image Usage Release</h2>
+    <div class="qrow" style="border-top:none; padding-top:0;">
+      <div class="qtext">I consent to Tridatu Tattoo photographing my tattoo (fresh and/or healed) for portfolio and Instagram (@tridatutattoo) purposes.</div>
+      <div class="radio-row">
+        <label class="radio-pill"><input type="radio" name="q_portfolio" value="Yes, I agree to be featured" required><span>Yes, feature it</span></label>
+        <label class="radio-pill"><input type="radio" name="q_portfolio" value="No, keep it private"><span>No, keep private</span></label>
+      </div>
+    </div>
+    <p class="notice">I understand that I am purchasing the right to wear this design on my body. Tridatu Tattoo retains copyright and reproduction rights of the artwork itself.</p>
+  </section>
+
+  <!-- SECTION 10 -->
+  <section class="section" id="s10">
+    <span class="section-num">10 / 11</span>
+    <h2>Liability Release</h2>
+    <p class="section-sub">I release Tridatu Tattoo from any claims arising from risks that have been disclosed to me and that I have accepted, provided the procedure is carried out according to standard hygiene protocols.</p>
+    <label class="checkline">
+      <input type="checkbox" id="liabilityAgree" name="liabilityAgree" required>
+      <span>I have read and agree to the liability release above.</span>
+    </label>
+  </section>
+
+  <!-- SECTION 11 — SIGNATURE -->
+  <section class="section" id="s11">
+    <span class="section-num">11 / 11</span>
+    <h2>Signature</h2>
+    <p class="section-sub">Sign below using your finger or mouse.</p>
+
+    <div class="field">
+      <label>Client Signature</label>
+      <canvas class="sigpad" id="clientSig"></canvas>
+      <div class="sig-actions">
+        <button type="button" class="sig-clear" data-target="clientSig">Clear signature</button>
+        <span class="sig-status" id="clientSigStatus">not signed</span>
+      </div>
+    </div>
+
+    <div class="field" id="guardianSigField" style="display:none;">
+      <label>Parent / Guardian Signature</label>
+      <canvas class="sigpad" id="guardianSig"></canvas>
+      <div class="sig-actions">
+        <button type="button" class="sig-clear" data-target="guardianSig">Clear signature</button>
+        <span class="sig-status" id="guardianSigStatus">not signed</span>
+      </div>
+    </div>
+
+    <p class="notice" id="dateStamp"></p>
+  </section>
+
+  <div class="submit-wrap">
+    <button type="submit" class="submit-btn" id="submitBtn">Submit Agreement</button>
+    <p class="form-error" id="formError">Please complete all required fields, including your signature, before submitting.</p>
+  </div>
+
+</form>
+</main>
+
+<div id="successScreen">
+  <h2>Thank you.</h2>
+  <p>Your agreement has been received. A copy will be sent to your email shortly.</p>
+  <p>See you at the studio — @tridatutattoo</p>
+</div>
+
+<footer>Tridatu Tattoo — Kuta, Bali</footer>
+
+<script>
+/* ============ CONFIG ============ */
+/* Paste your deployed Google Apps Script Web App URL here after setup (see SETUP.md) */
+const CONFIG = {
+  SCRIPT_URL: "https://script.google.com/macros/s/AKfycbxlC9-Kglw6upMSOJut7t6hkzS2Ah-0p0hYVvqTv__GZlEs6AnarKvh1zgoiNKu581nHg/exec"
+};
+
+/* ============ SCROLL PROGRESS ============ */
+const railProgress = document.getElementById('railProgress');
+window.addEventListener('scroll', () => {
+  const h = document.documentElement;
+  const scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+  railProgress.style.width = scrolled + '%';
+});
+
+/* ============ CONDITIONAL REVEALS (Yes/No -> show extra field) ============ */
+document.querySelectorAll('[data-reveal]').forEach(radio => {
+  radio.addEventListener('change', () => {
+    const targetId = radio.dataset.reveal;
+    const target = document.getElementById(targetId);
+    const name = radio.name;
+    const checkedVal = document.querySelector(`input[name="${name}"]:checked`).value;
+    if (checkedVal === 'Yes') {
+      target.classList.add('show');
+    } else {
+      target.classList.remove('show');
+    }
+  });
+});
+
+/* ============ AGE LOGIC ============ */
+const dobInput = document.getElementById('dob');
+const s2 = document.getElementById('s2');
+const minorBlock = document.getElementById('minorBlock');
+const ageBlocked = document.getElementById('ageBlocked');
+const guardianSigField = document.getElementById('guardianSigField');
+const guardianFields = ['guardianName','guardianId','relationship'];
+
+function calcAge(dobStr){
+  const dob = new Date(dobStr);
+  const today = new Date();
+  let age = today.getFullYear() - dob.getFullYear();
+  const m = today.getMonth() - dob.getMonth();
+  if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) age--;
+  return age;
+}
+
+dobInput.addEventListener('change', () => {
+  if (!dobInput.value) return;
+  const age = calcAge(dobInput.value);
+
+  if (age < 16) {
+    ageBlocked.classList.add('show');
+    s2.style.display = 'none';
+    guardianSigField.style.display = 'none';
+    submitBtn.disabled = true;
+  } else if (age < 18) {
+    ageBlocked.classList.remove('show');
+    s2.style.display = 'block';
+    guardianSigField.style.display = 'block';
+    submitBtn.disabled = false;
+    guardianFields.forEach(id => document.getElementById(id).required = true);
+    document.getElementById('guardianDeclare').required = true;
+  } else {
+    ageBlocked.classList.remove('show');
+    s2.style.display = 'none';
+    guardianSigField.style.display = 'none';
+    submitBtn.disabled = false;
+    guardianFields.forEach(id => document.getElementById(id).required = false);
+    document.getElementById('guardianDeclare').required = false;
+  }
+});
+
+/* ============ SESSION DATE / TBD TOGGLE ============ */
+const sessionDate = document.getElementById('sessionDate');
+const tbd = document.getElementById('tbd');
+tbd.addEventListener('change', () => {
+  if (tbd.checked) {
+    sessionDate.value = '';
+    sessionDate.disabled = true;
+  } else {
+    sessionDate.disabled = false;
+  }
+});
+
+/* ============ SIGNATURE PAD ============ */
+function initSigPad(canvasId, statusId){
+  const canvas = document.getElementById(canvasId);
+  const status = document.getElementById(statusId);
+  const ctx = canvas.getContext('2d');
+  let drawing = false;
+  let hasSignature = false;
+
+  function resize(){
+    const ratio = window.devicePixelRatio || 1;
+    const rect = canvas.getBoundingClientRect();
+    canvas.width = rect.width * ratio;
+    canvas.height = rect.height * ratio;
+    ctx.scale(ratio, ratio);
+    ctx.lineWidth = 2;
+    ctx.lineCap = 'round';
+    ctx.strokeStyle = '#1c1917';
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  function pos(e){
+    const rect = canvas.getBoundingClientRect();
+    if (e.touches && e.touches[0]) {
+      return { x: e.touches[0].clientX - rect.left, y: e.touches[0].clientY - rect.top };
+    }
+    return { x: e.clientX - rect.left, y: e.clientY - rect.top };
+  }
+
+  function start(e){
+    e.preventDefault();
+    drawing = true;
+    const p = pos(e);
+    ctx.beginPath();
+    ctx.moveTo(p.x, p.y);
+  }
+  function move(e){
+    if (!drawing) return;
+    e.preventDefault();
+    const p = pos(e);
+    ctx.lineTo(p.x, p.y);
+    ctx.stroke();
+    if (!hasSignature) {
+      hasSignature = true;
+      status.textContent = 'signed';
+      status.style.color = 'var(--ok)';
+    }
+  }
+  function end(){ drawing = false; }
+
+  canvas.addEventListener('mousedown', start);
+  canvas.addEventListener('mousemove', move);
+  window.addEventListener('mouseup', end);
+  canvas.addEventListener('touchstart', start, {passive:false});
+  canvas.addEventListener('touchmove', move, {passive:false});
+  canvas.addEventListener('touchend', end);
+
+  return {
+    clear(){
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      hasSignature = false;
+      status.textContent = 'not signed';
+      status.style.color = 'var(--stone)';
+    },
+    isSigned(){ return hasSignature; },
+    dataUrl(){ return canvas.toDataURL('image/png'); }
+  };
+}
+
+const clientSigPad = initSigPad('clientSig','clientSigStatus');
+const guardianSigPad = initSigPad('guardianSig','guardianSigStatus');
+
+document.querySelectorAll('.sig-clear').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const target = btn.dataset.target;
+    if (target === 'clientSig') clientSigPad.clear();
+    if (target === 'guardianSig') guardianSigPad.clear();
+  });
+});
+
+document.getElementById('dateStamp').textContent =
+  'Date: ' + new Date().toLocaleDateString('en-GB', { day:'2-digit', month:'long', year:'numeric' });
+
+/* ============ SUBMIT ============ */
+const form = document.getElementById('agreementForm');
+const submitBtn = document.getElementById('submitBtn');
+const formError = document.getElementById('formError');
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  formError.classList.remove('show');
+
+  if (!form.checkValidity()) {
+    form.reportValidity();
+    return;
+  }
+
+  const age = dobInput.value ? calcAge(dobInput.value) : null;
+  if (age !== null && age < 16) {
+    formError.textContent = 'Tridatu Tattoo is unable to accept clients under the age of 16.';
+    formError.classList.add('show');
+    return;
+  }
+
+  const isMinor = age !== null && age >= 16 && age < 18;
+
+  if (!clientSigPad.isSigned()) {
+    formError.textContent = 'Please provide the client signature before submitting.';
+    formError.classList.add('show');
+    document.getElementById('s11').scrollIntoView({behavior:'smooth'});
+    return;
+  }
+  if (isMinor && !guardianSigPad.isSigned()) {
+    formError.textContent = 'Please provide the parent/guardian signature before submitting.';
+    formError.classList.add('show');
+    document.getElementById('s11').scrollIntoView({behavior:'smooth'});
+    return;
+  }
+
+  const fd = new FormData(form);
+  const data = Object.fromEntries(fd.entries());
+  data.age = age;
+  data.isMinor = isMinor;
+  data.clientSignature = clientSigPad.dataUrl();
+  data.guardianSignature = isMinor ? guardianSigPad.dataUrl() : '';
+  data.submittedAt = new Date().toISOString();
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Submitting…';
+
+  try {
+    if (!CONFIG.SCRIPT_URL || CONFIG.SCRIPT_URL.indexOf('PASTE_YOUR') === 0) {
+      throw new Error('Script URL not configured');
+    }
+    await fetch(CONFIG.SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify(data)
+    });
+    form.style.display = 'none';
+    document.querySelector('header.masthead').style.display = 'none';
+    document.getElementById('successScreen').classList.add('show');
+    window.scrollTo(0,0);
+  } catch (err) {
+    formError.textContent = 'Something went wrong submitting the form. Please try again or contact the studio directly.';
+    formError.classList.add('show');
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Submit Agreement';
+  }
+});
+</script>
+
+</body>
+</html>
