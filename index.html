@@ -844,18 +844,22 @@ form.addEventListener('submit', async (e) => {
     if (!CONFIG.SCRIPT_URL || CONFIG.SCRIPT_URL.indexOf('PASTE_YOUR') === 0) {
       throw new Error('Script URL not configured');
     }
-    await fetch(CONFIG.SCRIPT_URL, {
+    const res = await fetch(CONFIG.SCRIPT_URL, {
       method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'text/plain' },
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
       body: JSON.stringify(data)
     });
+    const result = await res.json();
+    if (result.status !== 'ok') {
+      throw new Error(result.message || 'Unknown server error');
+    }
     form.style.display = 'none';
     document.querySelector('header.masthead').style.display = 'none';
     document.getElementById('successScreen').classList.add('show');
     window.scrollTo(0,0);
   } catch (err) {
-    formError.textContent = 'Something went wrong submitting the form. Please try again or contact the studio directly.';
+    console.error('Submission error:', err);
+    formError.textContent = 'Something went wrong submitting the form: ' + err.message + '. Please try again or contact the studio directly.';
     formError.classList.add('show');
     submitBtn.disabled = false;
     submitBtn.textContent = 'Submit Agreement';
