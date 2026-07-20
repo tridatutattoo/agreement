@@ -685,6 +685,8 @@ dobInput.addEventListener('change', () => {
     ageBlocked.classList.remove('show');
     s2.style.display = 'block';
     guardianSigField.style.display = 'block';
+    guardianSigPad.resize();
+    guardianSigPad.clear();
     submitBtn.disabled = false;
     guardianFields.forEach(id => document.getElementById(id).required = true);
     document.getElementById('guardianDeclare').required = true;
@@ -774,6 +776,7 @@ function initSigPad(canvasId, statusId){
       status.textContent = 'not signed';
       status.style.color = 'var(--stone)';
     },
+    resize(){ resize(); },
     isSigned(){ return hasSignature; },
     dataUrl(){ return canvas.toDataURL('image/png'); }
   };
