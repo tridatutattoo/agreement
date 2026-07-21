@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tridatu Tattoo — Formulir Persetujuan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Work+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1c1917;
+    --ink-soft:#3a352f;
+    --paper:#f2ead8;
+    --paper-deep:#e8dcc4;
+    --paper-card:#faf6ec;
+    --oxblood:#7a2530;
+    --oxblood-dark:#5c1c24;
+    --stone:#a79879;
+    --stone-line:#d8cba9;
+    --ok:#4a6b4d;
+    --err:#a13c2e;
+    --radius:2px;
+    --max-w:700px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Work Sans',sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .rail-progress{
+    position:fixed;
+    top:0; left:0;
+    height:3px; width:0%;
+    background:var(--oxblood);
+    z-index:100;
+    transition:width .25s ease;
+  }
+  header.masthead{
+    max-width:var(--max-w);
+    margin:0 auto;
+    padding:64px 24px 32px;
+    text-align:center;
+  }
+  header.masthead .brand{
+    font-family:'Space Mono',monospace;
+    letter-spacing:.28em;
+    text-transform:uppercase;
+    font-size:12px;
+    color:var(--stone);
+    margin-bottom:18px;
+  }
+  header.masthead h1{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    font-size:clamp(28px,5vw,40px);
+    margin:0 0 14px;
+    letter-spacing:-.01em;
+  }
+  header.masthead .quote{
+    font-family:'Fraunces',serif;
+    font-style:italic;
+    font-weight:400;
+    font-size:17px;
+    color:var(--ink-soft);
+    max-width:480px;
+    margin:0 auto 22px;
+  }
+  header.masthead .locale{
+    font-size:13px;
+    color:var(--stone);
+    font-family:'Space Mono',monospace;
+  }
+  .ink-divider{
+    width:44px; height:2px;
+    background:var(--oxblood);
+    margin:26px auto 0;
+    border-radius:2px;
+  }
+
+  main{
+    max-width:var(--max-w);
+    margin:0 auto;
+    padding:8px 24px 120px;
+  }
+
+  .section{
+    background:var(--paper-card);
+    border:1px solid var(--stone-line);
+    border-radius:var(--radius);
+    padding:32px 28px;
+    margin-bottom:22px;
+    position:relative;
+    scroll-margin-top:24px;
+  }
+  .section-num{
+    font-family:'Space Mono',monospace;
+    font-size:12px;
+    color:var(--oxblood);
+    letter-spacing:.14em;
+    display:block;
+    margin-bottom:8px;
+  }
+  .section h2{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    font-size:22px;
+    margin:0 0 6px;
+  }
+  .section .section-sub{
+    color:var(--ink-soft);
+    font-size:14px;
+    margin:0 0 22px;
+  }
+
+  label{
+    display:block;
+    font-size:13px;
+    font-weight:600;
+    margin-bottom:6px;
+    color:var(--ink-soft);
+  }
+  .field{margin-bottom:18px;}
+  input[type=text],
+  input[type=date],
+  input[type=tel],
+  input[type=email],
+  select,
+  textarea{
+    width:100%;
+    padding:11px 12px;
+    border:1px solid var(--stone-line);
+    border-radius:var(--radius);
+    background:#fff;
+    font-family:'Work Sans',sans-serif;
+    font-size:15px;
+    color:var(--ink);
+  }
+  input:focus, select:focus, textarea:focus{
+    outline:2px solid var(--oxblood);
+    outline-offset:1px;
+  }
+  textarea{resize:vertical; min-height:70px;}
+
+  .radio-row{display:flex; gap:10px; flex-wrap:wrap;}
+  .radio-pill{
+    position:relative;
+  }
+  .radio-pill input{position:absolute; opacity:0; width:1px; height:1px;}
+  .radio-pill span{
+    display:inline-block;
+    padding:9px 18px;
+    border:1px solid var(--stone-line);
+    border-radius:20px;
+    font-size:14px;
+    cursor:pointer;
+    background:#fff;
+    transition:all .15s ease;
+  }
+  .radio-pill input:checked + span{
+    background:var(--oxblood);
+    border-color:var(--oxblood);
+    color:#fff;
+  }
+  .radio-pill input:focus-visible + span{
+    outline:2px solid var(--oxblood);
+    outline-offset:2px;
+  }
+
+  .qrow{
+    padding:16px 0;
+    border-top:1px solid var(--stone-line);
+  }
+  .qrow:first-of-type{border-top:none; padding-top:0;}
+  .qtext{font-size:14.5px; margin-bottom:10px; color:var(--ink); font-weight:500;}
+  .conditional-field{
+    margin-top:12px;
+    padding-left:2px;
+    display:none;
+  }
+  .conditional-field.show{display:block;}
+
+  .checkline{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    font-size:14px;
+    color:var(--ink-soft);
+    cursor:pointer;
+  }
+  .checkline input{margin-top:3px; width:16px; height:16px; accent-color:var(--oxblood); flex-shrink:0;}
+
+  .aftercare-list{padding-left:20px; margin:0; font-size:14.5px;}
+  .aftercare-list li{margin-bottom:12px;}
+  .aftercare-list li strong{color:var(--oxblood-dark);}
+
+  .policy-box{
+    background:var(--paper-deep);
+    border-left:3px solid var(--oxblood);
+    padding:14px 16px;
+    font-size:14px;
+    border-radius:0 var(--radius) var(--radius) 0;
+    margin-bottom:16px;
+  }
+  .policy-box p{margin:0 0 8px;}
+  .policy-box p:last-child{margin-bottom:0;}
+
+  .notice{
+    font-size:13px;
+    color:var(--ink-soft);
+    font-style:italic;
+    margin-top:14px;
+  }
+
+  .minor-block{
+    display:none;
+    margin-top:20px;
+    padding-top:20px;
+    border-top:1px dashed var(--stone-line);
+  }
+  .minor-block.show{display:block;}
+  .minor-flag{
+    display:none;
+    background:#fbeceb;
+    border:1px solid var(--err);
+    color:var(--err);
+    padding:12px 14px;
+    border-radius:var(--radius);
+    font-size:13.5px;
+    margin-top:10px;
+  }
+  .minor-flag.show{display:block;}
+  .age-blocked{
+    display:none;
+    background:#fbeceb;
+    border:1px solid var(--err);
+    color:var(--err);
+    padding:14px 16px;
+    border-radius:var(--radius);
+    font-size:14px;
+    margin-top:10px;
+  }
+  .age-blocked.show{display:block;}
+
+  canvas.sigpad{
+    width:100%;
+    height:160px;
+    border:1px solid var(--stone-line);
+    border-radius:var(--radius);
+    background:#fff;
+    touch-action:none;
+    cursor:crosshair;
+  }
+  .sig-actions{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:8px;
+  }
+  .sig-clear{
+    background:none;
+    border:none;
+    font-family:'Space Mono',monospace;
+    font-size:12px;
+    color:var(--stone);
+    text-decoration:underline;
+    cursor:pointer;
+    padding:4px 0;
+  }
+  .sig-status{font-size:12px; color:var(--stone); font-family:'Space Mono',monospace;}
+
+  .submit-wrap{margin-top:8px;}
+  button.submit-btn{
+    width:100%;
+    padding:16px;
+    background:var(--oxblood);
+    color:#fff;
+    border:none;
+    border-radius:var(--radius);
+    font-family:'Space Mono',monospace;
+    font-size:14px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    cursor:pointer;
+    transition:background .15s ease;
+  }
+  button.submit-btn:hover{background:var(--oxblood-dark);}
+  button.submit-btn:disabled{background:var(--stone); cursor:not-allowed;}
+
+  .form-error{
+    font-size:13px;
+    color:var(--err);
+    margin-top:10px;
+    display:none;
+  }
+  .form-error.show{display:block;}
+
+  #successScreen{
+    display:none;
+    max-width:var(--max-w);
+    margin:80px auto;
+    padding:0 24px;
+    text-align:center;
+  }
+  #successScreen.show{display:block;}
+  #successScreen h2{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    font-size:28px;
+  }
+  #successScreen p{color:var(--ink-soft); font-size:15px;}
+
+  footer{
+    text-align:center;
+    padding:40px 24px 60px;
+    font-family:'Space Mono',monospace;
+    font-size:11px;
+    color:var(--stone);
+    letter-spacing:.08em;
+  }
+
+  @media (max-width:520px){
+    .section{padding:24px 18px;}
+    header.masthead{padding:44px 18px 24px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="rail-progress" id="railProgress"></div>
+
+<header class="masthead">
+  <div class="brand">Tridatu Tattoo</div>
+  <h1>Formulir Persetujuan &amp; Perjanjian</h1>
+  <p class="quote">"Apa yang ditato bukan sekadar kulit — ia menjadi kenangan. Perjanjian ini menjaga kenangan itu, dan menjaga Anda."</p>
+  <div class="locale">Studio privat · Hanya dengan perjanjian · Kuta, Bali</div>
+  <div class="ink-divider"></div>
+</header>
+
+<main>
+<form id="agreementForm" novalidate>
+
+  <!-- SECTION 1 -->
+  <section class="section" id="s1">
+    <span class="section-num">01 / 11</span>
+    <h2>Data Klien</h2>
+    <p class="section-sub">Mohon isi data sesuai dengan identitas resmi Anda.</p>
+
+    <div class="field">
+      <label for="fullName">Nama Lengkap</label>
+      <input type="text" id="fullName" name="fullName" required autocomplete="name">
+    </div>
+    <div class="field">
+      <label for="dob">Tanggal Lahir</label>
+      <input type="date" id="dob" name="dob" required>
+      <div class="age-blocked" id="ageBlocked">Terima kasih atas ketertarikan Anda — Tridatu Tattoo tidak dapat menerima klien di bawah usia 16 tahun, termasuk dengan persetujuan orang tua/wali.</div>
+    </div>
+    <div class="field">
+      <label for="idNumber">Nomor Identitas (KTP)</label>
+      <input type="text" id="idNumber" name="idNumber" required>
+    </div>
+    <div class="field">
+      <label for="phone">Nomor Telepon / WhatsApp</label>
+      <input type="tel" id="phone" name="phone" required autocomplete="tel">
+    </div>
+    <div class="field">
+      <label for="email">Alamat Email</label>
+      <input type="email" id="email" name="email" required autocomplete="email">
+    </div>
+    <div class="field">
+      <label for="instagram">Instagram</label>
+      <input type="text" id="instagram" name="instagram" placeholder="@akunanda">
+    </div>
+  </section>
+
+  <!-- SECTION 2 — MINOR CONSENT (conditional) -->
+  <section class="section" id="s2" style="display:none;">
+    <span class="section-num">02 / 11</span>
+    <h2>Persetujuan Orang Tua/Wali</h2>
+    <p class="section-sub">Diperlukan karena tanggal lahir yang dimasukkan menunjukkan klien berusia di bawah 18 tahun.</p>
+
+    <div class="minor-block show" id="minorBlock">
+      <div class="field">
+        <label for="guardianName">Nama Lengkap Orang Tua/Wali</label>
+        <input type="text" id="guardianName" name="guardianName">
+      </div>
+      <div class="field">
+        <label for="guardianId">Nomor Identitas Orang Tua/Wali (KTP)</label>
+        <input type="text" id="guardianId" name="guardianId">
+      </div>
+      <div class="field">
+        <label for="relationship">Hubungan dengan Klien</label>
+        <input type="text" id="relationship" name="relationship" placeholder="misalnya: Ibu, Ayah, Wali Sah">
+      </div>
+      <label class="checkline">
+        <input type="checkbox" id="guardianDeclare" name="guardianDeclare">
+        <span>Saya adalah orang tua/wali sah dari klien yang disebutkan di atas dan dengan ini memberikan persetujuan atas prosedur tato yang akan dilakukan.</span>
+      </label>
+    </div>
+  </section>
+
+  <!-- SECTION 3 -->
+  <section class="section" id="s3">
+    <span class="section-num">03 / 11</span>
+    <h2>Tanggal Sesi</h2>
+    <div class="field">
+      <label for="sessionDate">Tanggal Sesi</label>
+      <input type="date" id="sessionDate" name="sessionDate">
+    </div>
+    <label class="checkline">
+      <input type="checkbox" id="tbd" name="tbd">
+      <span>Akan didiskusikan dengan artist</span>
+    </label>
+  </section>
+
+  <!-- SECTION 4 — HEALTH DECLARATION -->
+  <section class="section" id="s4">
+    <span class="section-num">04 / 11</span>
+    <h2>Pernyataan Kesehatan</h2>
+    <p class="section-sub">Mohon dijawab dengan jujur — informasi ini membantu menjaga keselamatan Anda.</p>
+
+    <div class="qrow">
+      <div class="qtext">Apakah Anda sedang hamil atau menyusui?</div>
+      <div class="radio-row">
+        <label class="radio-pill"><input type="radio" name="q_pregnant" value="Ya" required><span>Ya</span></label>
+        <label class="radio-pill"><input type="radio" name="q_pregnant" value="Tidak"><span>Tidak</span></label>
+      </div>
+    </div>
+
+    <div class="qrow">
+      <div class="qtext">Apakah Anda memiliki riwayat alergi (lateks, tinta, obat bius topikal, dll.)?</div>
+      <div class="radio-row">
+        <label class="radio-pill"><input type="radio" name="q_allergy" value="Ya" required data-reveal="allergyDetail"><span>Ya</span></label>
+        <label class="radio-pill"><input type="radio" name="q_allergy" value="Tidak" data-reveal="allergyDetail"><span>Tidak</span></label>
+      </div>
+      <div class="conditional-field" id="allergyDetail">
+        <input type="text" id="allergyDetailText" name="allergyDetailText" placeholder="Mohon sebutkan">
+      </div>
+    </div>
+
+    <div class="qrow">
+      <div class="qtext">Apakah Anda memiliki kondisi kulit tertentu (eksim, psoriasis, kulit rentan keloid)?</div>
+      <div class="radio-row">
+        <label class="radio-pill"><input type="radio" name="q_skin" value="Ya" required><span>Ya</span></label>
+        <label class="radio-pill"><input type="radio" name="q_skin" value="Tidak"><span>Tidak</span></label>
+      </div>
+    </div>
+
+    <div class="qrow">
+      <div class="qtext">Apakah Anda memiliki kondisi medis tertentu (diabetes, hemofilia, gangguan jantung, epilepsi)?</div>
+      <div class="radio-row">
+        <label class="radio-pill"><input type="radio" name="q_medical" value="Ya" required><span>Ya</span></label>
+        <label class="radio-pill"><input type="radio" name="q_medical" value="Tidak"><span>Tidak</span></label>
+      </div>
+    </div>
+
+    <div class="qrow">
+      <div class="qtext">Apakah Anda sedang mengonsumsi obat tertentu (misalnya pengencer darah)?</div>
+      <div class="radio-row">
+        <label class="radio-pill"><input type="radio" name="q_medication" value="Ya" required><span>Ya</span></label>
+        <label class="radio-pill"><input type="radio" name="q_medication" value="Tidak"><span>Tidak</span></label>
+      </div>
+    </div>
+
+    <div class="qrow">
+      <div class="qtext">Apakah Anda berada di bawah pengaruh alkohol atau obat-obatan hari ini?</div>
+      <div class="radio-row">
+        <label class="radio-pill"><input type="radio" name="q_influence" value="Ya" required data-reveal="influenceFlag"><span>Ya</span></label>
+        <label class="radio-pill"><input type="radio" name="q_influence" value="Tidak" data-reveal="influenceFlag"><span>Tidak</span></label>
+      </div>
+      <div class="minor-flag" id="influenceFlag">Studio berhak menolak atau menjadwalkan ulang sesi apabila Anda berada di bawah pengaruh alkohol atau obat-obatan.</div>
+    </div>
+
+    <div class="qrow">
+      <div class="qtext">Apakah Anda pernah pingsan saat menjalani prosedur medis atau tato sebelumnya?</div>
+      <div class="radio-row">
+        <label class="radio-pill"><input type="radio" name="q_fainted" value="Ya" required><span>Ya</span></label>
+        <label class="radio-pill"><input type="radio" name="q_fainted" value="Tidak"><span>Tidak</span></label>
+      </div>
+    </div>
+
+    <p class="notice">Tridatu Tattoo berhak menolak atau menjadwalkan ulang sesi berdasarkan informasi kesehatan yang diberikan, termasuk meminta surat keterangan dokter untuk kondisi medis tertentu sebelum prosedur dilakukan.</p>
+  </section>
+
+  <!-- SECTION 5 -->
+  <section class="section" id="s5">
+    <span class="section-num">05 / 11</span>
+    <h2>Pernyataan Persetujuan Berdasarkan Informasi</h2>
+    <p class="section-sub">Dengan mencentang kotak di bawah ini, saya menyatakan memahami dan menyetujui bahwa:</p>
+    <ul class="aftercare-list">
+      <li>Tato merupakan modifikasi permanen pada kulit.</li>
+      <li>Terdapat risiko yang mungkin timbul, seperti infeksi, reaksi alergi, perubahan warna kulit, dan jaringan parut.</li>
+      <li>Hasil akhir dapat berbeda dari desain referensi karena karakteristik kulit tiap individu berbeda.</li>
+      <li>Saya memberikan kebebasan berkreasi terbatas kepada artist sesuai dengan brief yang telah disepakati.</li>
+    </ul>
+    <label class="checkline">
+      <input type="checkbox" id="consentAgree" name="consentAgree" required>
+      <span>Saya telah membaca dan menyetujui pernyataan persetujuan di atas.</span>
+    </label>
+  </section>
+
+  <!-- SECTION 6 — AFTERCARE -->
+  <section class="section" id="s6">
+    <span class="section-num">06 / 11</span>
+    <h2>Perjanjian Perawatan Pasca-Tato</h2>
+    <p class="section-sub">Saya menyatakan telah menerima dan memahami instruksi perawatan pasca-tato di bawah ini, dan bertanggung jawab penuh atas perawatan tato setelah meninggalkan studio. Tridatu Tattoo tidak bertanggung jawab atas komplikasi yang timbul akibat perawatan yang tidak sesuai instruksi.</p>
+    <ol class="aftercare-list">
+      <li>Gunakan second skin (film pelindung) selama minimal 12 jam hingga 3 hari, lalu kelupas perlahan dan bersihkan area tato dengan air hangat suam-suam kuku, kemudian tepuk-tepuk dengan tisu atau kertas untuk mengeringkannya. Jika muncul penumpukan cairan berlebih, lepuhan, ruam, atau iritasi di bawah second skin sebelum waktu yang disarankan, lepaskan lebih awal dan bersihkan area tersebut dengan lembut.</li>
+      <li>Oleskan salep (krim perawatan tato) yang direkomendasikan artist dalam lapisan <strong>TIPIS</strong>, 1–3 kali sehari, sekadar untuk menjaga kelembapan.</li>
+      <li>Jaga tato tetap bersih dan kering, hindari merendam area tato dalam air — mandi shower diperbolehkan, berendam tidak. (Tentunya hindari berenang di mana pun.)</li>
+      <li>Hindari paparan sinar matahari langsung pada tato selama proses penyembuhan.</li>
+      <li>Kenakan pakaian yang longgar dan bersih di atas area tato untuk menghindari gesekan dan menjaga sirkulasi udara. Hindari gym, sauna, atau yoga panas, serta aktivitas apa pun yang menyebabkan keringat berlebih dan gesekan setidaknya selama 1–2 minggu.</li>
+      <li>Bersabarlah dengan proses penyembuhan — prosesnya membutuhkan waktu, dan setiap orang berbeda. Penyembuhan tercepat sekitar 1 minggu, sebagian membutuhkan beberapa minggu, dan 1 bulan masih tergolong normal untuk tato sembuh sepenuhnya.</li>
+      <li><strong>Jangan digosok atau dikelupas paksa!</strong> Saat proses penyembuhan, tato mungkin mengering, mengelupas ringan, dan terasa gatal — JANGAN DIGARUK! Jika benar-benar perlu menyentuh tato, pastikan tangan Anda bersih terlebih dahulu.</li>
+      <li>Waspadai tanda-tanda infeksi: kemerahan berlebih yang menyebar melampaui area tato, pembengkakan, keluarnya nanah/cairan, demam, atau rasa nyeri yang meningkat setelah beberapa hari pertama. Jika muncul tanda-tanda ini, segera cari pertolongan medis dan informasikan kepada artist Anda.</li>
+      <li>Touch-up mungkin diperlukan. Setelah tato benar-benar sembuh, jika ada bagian yang dirasa kurang sempurna, silakan hubungi artist Anda secara langsung. Karena setiap orang berbeda, sebagian mengelupas lebih sedikit, sebagian lebih banyak.</li>
+      <li>Untuk pertanyaan atau kekhawatiran selama proses penyembuhan maupun soal touch-up, hubungi Tridatu Tattoo langsung melalui Instagram — mohon untuk tidak mencari saran perawatan dari sumber yang tidak terkait.</li>
+    </ol>
+    <label class="checkline">
+      <input type="checkbox" id="aftercareAgree" name="aftercareAgree" required>
+      <span>Saya telah membaca dan memahami instruksi perawatan pasca-tato di atas.</span>
+    </label>
+  </section>
+
+  <!-- SECTION 7 -->
+  <section class="section" id="s7">
+    <span class="section-num">07 / 11</span>
+    <h2>Kebijakan Touch-up</h2>
+    <div class="policy-box">
+      <p>Tridatu Tattoo menyediakan <strong>touch-up gratis selamanya.</strong></p>
+      <p>Proses penyembuhan setiap orang berbeda-beda — ada yang mengelupas lebih banyak, ada yang lebih sedikit, dan hasilnya dapat bervariasi antar individu meskipun mengikuti perawatan yang sama. Apabila tato Anda memerlukan touch-up setelah benar-benar sembuh, studio akan selalu siap menyempurnakan karya di tubuh Anda.</p>
+    </div>
+  </section>
+
+  <!-- SECTION 8 -->
+  <section class="section" id="s8">
+    <span class="section-num">08 / 11</span>
+    <h2>Kebijakan Booking &amp; Pembayaran</h2>
+    <div class="policy-box">
+      <p>Deposit (DP) diperlukan untuk mengonfirmasi booking. (Nominal dikonfirmasi langsung dengan artist.)</p>
+      <p>Penjadwalan ulang atau pembatalan harus dilakukan minimal <strong>48 jam</strong> sebelumnya.</p>
+      <p><strong>Tidak hadir tanpa konfirmasi (no-show):</strong> deposit hangus.</p>
+      <p><strong>Metode pembayaran: tunai (cash) saja.</strong> Deposit dapat dibayarkan melalui transfer bank; pelunasan wajib tunai.</p>
+    </div>
+    <label class="checkline">
+      <input type="checkbox" id="policyAgree" name="policyAgree" required>
+      <span>Saya telah membaca dan menyetujui kebijakan booking dan pembayaran di atas.</span>
+    </label>
+  </section>
+
+  <!-- SECTION 9 -->
+  <section class="section" id="s9">
+    <span class="section-num">09 / 11</span>
+    <h2>Persetujuan Penggunaan Foto &amp; Portofolio</h2>
+    <div class="qrow" style="border-top:none; padding-top:0;">
+      <div class="qtext">Saya menyetujui Tridatu Tattoo untuk mendokumentasikan hasil tato saya (baru maupun setelah sembuh) untuk keperluan portofolio dan Instagram (@tridatutattoo).</div>
+      <div class="radio-row">
+        <label class="radio-pill"><input type="radio" name="q_portfolio" value="Ya, saya setuju untuk ditampilkan" required><span>Ya, boleh ditampilkan</span></label>
+        <label class="radio-pill"><input type="radio" name="q_portfolio" value="Tidak, mohon dirahasiakan"><span>Tidak, dirahasiakan</span></label>
+      </div>
+    </div>
+    <p class="notice">Saya memahami bahwa saya membeli hak untuk mengenakan desain ini di tubuh saya sendiri. Hak cipta dan hak reproduksi karya tetap dimiliki oleh Tridatu Tattoo.</p>
+  </section>
+
+  <!-- SECTION 10 -->
+  <section class="section" id="s10">
+    <span class="section-num">10 / 11</span>
+    <h2>Pembebasan Tanggung Jawab</h2>
+    <p class="section-sub">Saya membebaskan Tridatu Tattoo dari segala tuntutan yang timbul akibat risiko yang telah diinformasikan dan saya setujui, selama prosedur dilakukan sesuai dengan protokol kebersihan standar.</p>
+    <label class="checkline">
+      <input type="checkbox" id="liabilityAgree" name="liabilityAgree" required>
+      <span>Saya telah membaca dan menyetujui pembebasan tanggung jawab di atas.</span>
+    </label>
+  </section>
+
+  <!-- SECTION 11 — SIGNATURE -->
+  <section class="section" id="s11">
+    <span class="section-num">11 / 11</span>
+    <h2>Tanda Tangan</h2>
+    <p class="section-sub">Tanda tangan menggunakan jari atau mouse Anda di bawah ini.</p>
+
+    <div class="field">
+      <label>Tanda Tangan Klien</label>
+      <canvas class="sigpad" id="clientSig"></canvas>
+      <div class="sig-actions">
+        <button type="button" class="sig-clear" data-target="clientSig">Hapus tanda tangan</button>
+        <span class="sig-status" id="clientSigStatus">belum ditandatangani</span>
+      </div>
+    </div>
+
+    <div class="field" id="guardianSigField" style="display:none;">
+      <label>Tanda Tangan Orang Tua/Wali</label>
+      <canvas class="sigpad" id="guardianSig"></canvas>
+      <div class="sig-actions">
+        <button type="button" class="sig-clear" data-target="guardianSig">Hapus tanda tangan</button>
+        <span class="sig-status" id="guardianSigStatus">belum ditandatangani</span>
+      </div>
+    </div>
+
+    <p class="notice" id="dateStamp"></p>
+  </section>
+
+  <div class="submit-wrap">
+    <button type="submit" class="submit-btn" id="submitBtn">Kirim Perjanjian</button>
+    <p class="form-error" id="formError">Mohon lengkapi seluruh kolom wajib, termasuk tanda tangan, sebelum mengirimkan formulir.</p>
+  </div>
+
+</form>
+</main>
+
+<div id="successScreen">
+  <h2>Terima kasih.</h2>
+  <p>Perjanjian Anda telah kami terima. Salinan akan dikirimkan ke email Anda segera.</p>
+  <p>Sampai jumpa di studio — @tridatutattoo</p>
+</div>
+
+<footer>Tridatu Tattoo — Kuta, Bali</footer>
+
+<script>
+/* ============ CONFIG ============ */
+/* Tempelkan URL Web App Google Apps Script (versi Bahasa Indonesia) di sini setelah setup (lihat SETUP_ID.md) */
+const CONFIG = {
+  SCRIPT_URL: "https://script.google.com/macros/s/AKfycbwepuWOySedlxZoq1jz-RuOlFoNm3L1w8AWkDVvGv66NrhKi7JnWfvy4IUYF0sB2L3HLg/exec"
+};
+
+/* ============ SCROLL PROGRESS ============ */
+const railProgress = document.getElementById('railProgress');
+window.addEventListener('scroll', () => {
+  const h = document.documentElement;
+  const scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+  railProgress.style.width = scrolled + '%';
+});
+
+/* ============ CONDITIONAL REVEALS (Ya/Tidak -> show extra field) ============ */
+document.querySelectorAll('[data-reveal]').forEach(radio => {
+  radio.addEventListener('change', () => {
+    const targetId = radio.dataset.reveal;
+    const target = document.getElementById(targetId);
+    const name = radio.name;
+    const checkedVal = document.querySelector(`input[name="${name}"]:checked`).value;
+    if (checkedVal === 'Ya') {
+      target.classList.add('show');
+    } else {
+      target.classList.remove('show');
+    }
+  });
+});
+
+/* ============ AGE LOGIC ============ */
+const dobInput = document.getElementById('dob');
+const s2 = document.getElementById('s2');
+const minorBlock = document.getElementById('minorBlock');
+const ageBlocked = document.getElementById('ageBlocked');
+const guardianSigField = document.getElementById('guardianSigField');
+const guardianFields = ['guardianName','guardianId','relationship'];
+
+function calcAge(dobStr){
+  const dob = new Date(dobStr);
+  const today = new Date();
+  let age = today.getFullYear() - dob.getFullYear();
+  const m = today.getMonth() - dob.getMonth();
+  if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) age--;
+  return age;
+}
+
+dobInput.addEventListener('change', () => {
+  if (!dobInput.value) return;
+  const age = calcAge(dobInput.value);
+
+  if (age < 16) {
+    ageBlocked.classList.add('show');
+    s2.style.display = 'none';
+    guardianSigField.style.display = 'none';
+    submitBtn.disabled = true;
+  } else if (age < 18) {
+    ageBlocked.classList.remove('show');
+    s2.style.display = 'block';
+    guardianSigField.style.display = 'block';
+    guardianSigPad.resize();
+    guardianSigPad.clear();
+    submitBtn.disabled = false;
+    guardianFields.forEach(id => document.getElementById(id).required = true);
+    document.getElementById('guardianDeclare').required = true;
+  } else {
+    ageBlocked.classList.remove('show');
+    s2.style.display = 'none';
+    guardianSigField.style.display = 'none';
+    submitBtn.disabled = false;
+    guardianFields.forEach(id => document.getElementById(id).required = false);
+    document.getElementById('guardianDeclare').required = false;
+  }
+});
+
+/* ============ SESSION DATE / TBD TOGGLE ============ */
+const sessionDate = document.getElementById('sessionDate');
+const tbd = document.getElementById('tbd');
+tbd.addEventListener('change', () => {
+  if (tbd.checked) {
+    sessionDate.value = '';
+    sessionDate.disabled = true;
+  } else {
+    sessionDate.disabled = false;
+  }
+});
+
+/* ============ SIGNATURE PAD ============ */
+function initSigPad(canvasId, statusId){
+  const canvas = document.getElementById(canvasId);
+  const status = document.getElementById(statusId);
+  const ctx = canvas.getContext('2d');
+  let drawing = false;
+  let hasSignature = false;
+
+  function resize(){
+    const ratio = window.devicePixelRatio || 1;
+    const rect = canvas.getBoundingClientRect();
+    canvas.width = rect.width * ratio;
+    canvas.height = rect.height * ratio;
+    ctx.scale(ratio, ratio);
+    ctx.lineWidth = 2;
+    ctx.lineCap = 'round';
+    ctx.strokeStyle = '#1c1917';
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  function pos(e){
+    const rect = canvas.getBoundingClientRect();
+    if (e.touches && e.touches[0]) {
+      return { x: e.touches[0].clientX - rect.left, y: e.touches[0].clientY - rect.top };
+    }
+    return { x: e.clientX - rect.left, y: e.clientY - rect.top };
+  }
+
+  function start(e){
+    e.preventDefault();
+    drawing = true;
+    const p = pos(e);
+    ctx.beginPath();
+    ctx.moveTo(p.x, p.y);
+  }
+  function move(e){
+    if (!drawing) return;
+    e.preventDefault();
+    const p = pos(e);
+    ctx.lineTo(p.x, p.y);
+    ctx.stroke();
+    if (!hasSignature) {
+      hasSignature = true;
+      status.textContent = 'sudah ditandatangani';
+      status.style.color = 'var(--ok)';
+    }
+  }
+  function end(){ drawing = false; }
+
+  canvas.addEventListener('mousedown', start);
+  canvas.addEventListener('mousemove', move);
+  window.addEventListener('mouseup', end);
+  canvas.addEventListener('touchstart', start, {passive:false});
+  canvas.addEventListener('touchmove', move, {passive:false});
+  canvas.addEventListener('touchend', end);
+
+  return {
+    clear(){
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      hasSignature = false;
+      status.textContent = 'belum ditandatangani';
+      status.style.color = 'var(--stone)';
+    },
+    resize(){ resize(); },
+    isSigned(){ return hasSignature; },
+    dataUrl(){ return canvas.toDataURL('image/png'); }
+  };
+}
+
+const clientSigPad = initSigPad('clientSig','clientSigStatus');
+const guardianSigPad = initSigPad('guardianSig','guardianSigStatus');
+
+document.querySelectorAll('.sig-clear').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const target = btn.dataset.target;
+    if (target === 'clientSig') clientSigPad.clear();
+    if (target === 'guardianSig') guardianSigPad.clear();
+  });
+});
+
+document.getElementById('dateStamp').textContent =
+  'Tanggal: ' + new Date().toLocaleDateString('id-ID', { day:'2-digit', month:'long', year:'numeric' });
+
+/* ============ SUBMIT ============ */
+const form = document.getElementById('agreementForm');
+const submitBtn = document.getElementById('submitBtn');
+const formError = document.getElementById('formError');
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  formError.classList.remove('show');
+
+  if (!form.checkValidity()) {
+    form.reportValidity();
+    return;
+  }
+
+  const age = dobInput.value ? calcAge(dobInput.value) : null;
+  if (age !== null && age < 16) {
+    formError.textContent = 'Tridatu Tattoo tidak dapat menerima klien di bawah usia 16 tahun.';
+    formError.classList.add('show');
+    return;
+  }
+
+  const isMinor = age !== null && age >= 16 && age < 18;
+
+  if (!clientSigPad.isSigned()) {
+    formError.textContent = 'Mohon berikan tanda tangan klien sebelum mengirimkan formulir.';
+    formError.classList.add('show');
+    document.getElementById('s11').scrollIntoView({behavior:'smooth'});
+    return;
+  }
+  if (isMinor && !guardianSigPad.isSigned()) {
+    formError.textContent = 'Mohon berikan tanda tangan orang tua/wali sebelum mengirimkan formulir.';
+    formError.classList.add('show');
+    document.getElementById('s11').scrollIntoView({behavior:'smooth'});
+    return;
+  }
+
+  const fd = new FormData(form);
+  const data = Object.fromEntries(fd.entries());
+  data.age = age;
+  data.isMinor = isMinor;
+  data.clientSignature = clientSigPad.dataUrl();
+  data.guardianSignature = isMinor ? guardianSigPad.dataUrl() : '';
+  data.submittedAt = new Date().toISOString();
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Mengirim…';
+
+  try {
+    if (!CONFIG.SCRIPT_URL || CONFIG.SCRIPT_URL.indexOf('PASTE_YOUR') === 0) {
+      throw new Error('Script URL not configured');
+    }
+    const res = await fetch(CONFIG.SCRIPT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(data)
+    });
+    const result = await res.json();
+    if (result.status !== 'ok') {
+      throw new Error(result.message || 'Unknown server error');
+    }
+    form.style.display = 'none';
+    document.querySelector('header.masthead').style.display = 'none';
+    document.getElementById('successScreen').classList.add('show');
+    window.scrollTo(0,0);
+  } catch (err) {
+    console.error('Submission error:', err);
+    formError.textContent = 'Terjadi kesalahan saat mengirim formulir: ' + err.message + '. Mohon coba lagi atau hubungi studio secara langsung.';
+    formError.classList.add('show');
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Kirim Perjanjian';
+  }
+});
+</script>
+
+</body>
+</html>
